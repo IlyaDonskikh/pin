@@ -7,5 +7,5 @@ Dir.glob('./{models,services}/*.rb').each do |file|
 end
 
 require './app'
-run SinatraTest::Application
+run WheelyPin::Application
 

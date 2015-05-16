@@ -1,4 +1,4 @@
-module SinatraTest
+module WheelyPin
   class Application < Sinatra::Base
     get '/' do
       content_type :json
