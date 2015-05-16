@@ -7,10 +7,12 @@ class Pin
     @expire = params[:expire]
   end
 
-  def self.find(token)
-    code = REDIS.get(token)
+  def self.get_code_by(token)
+    REDIS.get(token)
+  end
 
-    Pin.new(code: code, token: token)
+  def self.delete(token)
+    REDIS.del(token)
   end
 
   def save
@@ -19,9 +21,4 @@ class Pin
 
     true
   end
-
-  private
-    def generate_code
-      (0...4).map { (1..9).to_a.sample }.join
-    end
 end

@@ -1,15 +1,18 @@
 module WheelyPin
   class Application < Sinatra::Base
-    get '/create/?' do
-      generate_pin = Pin::Create.call(params[:token])
+    get '/create' do
+      create_pin = Pin::Create.call(params[:token])
 
-      generate_pin.to_json
+      create_pin.to_json
     end
 
-    get '/show/?' do
-      pin = Pin.find('228')
+    get '/check' do
+      token = params[:token]
+      code = params[:code]
 
-      pin.code.to_json
+      check_pin = Pin::Check.call(token, code)
+
+      check_pin.to_json
     end
   end
 end

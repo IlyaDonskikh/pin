@@ -4,10 +4,11 @@ class Pin::Create < Service::Base
   def initialize(token)
     @token = token
     @code = generate_code
-    @expire = 10
+    @expire = 60 # seconds
   end
 
   def call
+    p @code
     @pin = Pin.new(token: @token, code: @code, expire: @expire)
     @pin.save
 
@@ -15,6 +16,7 @@ class Pin::Create < Service::Base
   end
 
   private
+
     def generate_code
       (0...4).map { (1..9).to_a.sample }.join
     end
