@@ -1,9 +1,10 @@
 class Pin
-  attr_accessor :code, :token
+  attr_accessor :code, :token, :expire
 
   def initialize(params = {})
     @token = params[:token]
     @code = params[:code]
+    @expire = params[:expire]
   end
 
   def self.find(token)
@@ -14,7 +15,7 @@ class Pin
 
   def save
     REDIS.set(token, code)
-    REDIS.expire(token, 900)
+    REDIS.expire(token, expire)
 
     true
   end

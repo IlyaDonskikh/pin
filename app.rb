@@ -1,20 +1,13 @@
 module WheelyPin
   class Application < Sinatra::Base
-    get '/' do
-      content_type :json
-
-      pin = Pin.new()
-
-      pin.code.to_json
-    end
-
     get '/create/?' do
-      pin = Pin.new(token: 'time', code: '5567')
-      pin.save
+      generate_pin = Pin::Create.call(params[:token])
+
+      generate_pin.to_json
     end
 
     get '/show/?' do
-      pin = Pin.find('time')
+      pin = Pin.find('228')
 
       pin.code.to_json
     end

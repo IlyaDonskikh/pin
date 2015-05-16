@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler'
 Bundler.require
 
-Dir.glob('./{models,services}/*.rb').each do |file|
+Dir[File.join("./app/", "**/*.rb")].each do |file|
   require file
 end
 
