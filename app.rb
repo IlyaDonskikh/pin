@@ -9,14 +9,14 @@ module SinatraTest
     end
 
     get '/create/?' do
-      pin = Pin.new()
+      pin = Pin.new(token: 'time', code: '5567')
       pin.save
     end
 
     get '/show/?' do
-      pin = Pin.find('lol')
+      pin = Pin.find('time')
 
-      pin.token.to_json
+      pin.code.to_json
     end
   end
 end
