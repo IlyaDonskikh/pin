@@ -1,12 +1,12 @@
 module WheelyPin
   class Application < Sinatra::Base
-    get '/create' do
+    post '/create' do
       create_pin = Pin::Create.call(params[:token])
 
       create_pin.to_json
     end
 
-    get '/check' do
+    post '/check' do
       token = params[:token]
       code = params[:code]
 
