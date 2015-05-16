@@ -11,6 +11,8 @@ class Pin::Create < Service::Base
     @pin = Pin.new(token: @token, code: @code, expire: @expire)
     @pin.save
 
+    send_code
+
     true
   end
 
@@ -18,5 +20,9 @@ class Pin::Create < Service::Base
 
     def generate_code
       (0...4).map { (1..9).to_a.sample }.join
+    end
+
+    def send_code
+      p @code # Sms sender
     end
 end
