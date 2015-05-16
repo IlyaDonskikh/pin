@@ -10,14 +10,12 @@ class Pin::Check < Service::Base
   def call
     verify!
 
-    result = if @errors.empty?
+    if @errors.empty?
       Pin.delete(token)
       'success'
-    else 
+    else
       @errors
     end
-
-    result
   end
 
   private

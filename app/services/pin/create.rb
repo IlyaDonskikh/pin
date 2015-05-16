@@ -8,7 +8,6 @@ class Pin::Create < Service::Base
   end
 
   def call
-    p @code
     @pin = Pin.new(token: @token, code: @code, expire: @expire)
     @pin.save
 
