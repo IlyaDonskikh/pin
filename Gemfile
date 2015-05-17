@@ -5,5 +5,8 @@ gem 'json'
 gem 'rack'
 gem 'redis'
 gem 'rerun'
-gem "rspec"
-gem 'rack-test'
+
+group :test do
+  gem "rspec"
+  gem "rack-test"
+end
