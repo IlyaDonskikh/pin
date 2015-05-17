@@ -11,13 +11,17 @@ class Pin
     REDIS.get(token)
   end
 
+  def self.create(params = {})
+    new(params).save
+  end
+
   def self.delete(token)
     REDIS.del(token)
   end
 
   def save
     REDIS.set(token, code)
-    REDIS.expire(token, expire)
+    REDIS.expire(token, expire) if expire
 
     true
   end

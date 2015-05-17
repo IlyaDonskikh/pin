@@ -12,9 +12,10 @@ class Pin::Check < Service::Base
 
     if @errors.empty?
       Pin.delete(token)
-      'success'
+
+      { token: token }
     else
-      @errors
+      { errors: @errors }
     end
   end
 

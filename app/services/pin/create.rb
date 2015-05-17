@@ -4,7 +4,7 @@ class Pin::Create < Service::Base
   def initialize(token)
     @token = token
     @code = generate_code
-    @expire = 60 # seconds
+    @expire = 120 # seconds
   end
 
   def call
