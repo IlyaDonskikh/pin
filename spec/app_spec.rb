@@ -1,4 +1,4 @@
-describe 'Wheely Pin Application' do
+describe 'pin application' do
   it 'create pin' do
     post 'create'
 
@@ -6,8 +6,8 @@ describe 'Wheely Pin Application' do
   end
 
   it 'return token' do
-    token = 'wheely_registration2'
-    code = '1242'
+    token = generate_number
+    code = generate_number
     Pin.create(token: token, code: code, expire: 120)
 
     post 'check', token: token, code: code
@@ -18,11 +18,17 @@ describe 'Wheely Pin Application' do
   end
 
   it 'return error if code invalid' do
-    post 'check', token: 123, code: 22
+    post 'check', token: generate_number, code: generate_number
 
     response = JSON.parse(last_response.body)
     result = { 'errors' => ['code not valid'] }
 
     expect(response).to eq(result)
   end
+
+  private
+
+    def generate_number
+      (0...4).map { (1..9).to_a.sample }.join
+    end
 end
