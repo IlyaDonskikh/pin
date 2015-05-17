@@ -1,11 +1,11 @@
 class Pin::Create < Service::Base
   attr_accessor :token
 
-  def initialize(token, phone)
+  def initialize(token, phone, expire = 120)
     @token = token
     @phone = phone
     @code = generate_code
-    @expire = 120 # seconds
+    @expire = expire # seconds
   end
 
   def call

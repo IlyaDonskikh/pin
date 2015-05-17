@@ -5,7 +5,11 @@ module WheelyPin
     end
 
     post '/create' do
-      create_pin = Pin::Create.call(params[:token], nil)
+      token = params[:token]
+      phone = params[:phone]
+      expire = params[:expire]
+
+      create_pin = Pin::Create.call(token, phone, expire)
 
       create_pin.to_json
     end
