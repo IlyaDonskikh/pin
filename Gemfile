@@ -5,6 +5,7 @@ gem 'json'
 gem 'rack'
 gem 'redis'
 gem 'rerun'
+gem 'require_all'
 
 group :test do
   gem "rspec"
