@@ -1,5 +1,9 @@
 module WheelyPin
   class Application < Sinatra::Base
+    before do
+      content_type :json
+    end
+
     post '/create' do
       create_pin = Pin::Create.call(params[:token], nil)
 
