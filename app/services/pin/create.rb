@@ -1,5 +1,5 @@
 class Pin::Create < Service::Base
-  attr_accessor :token
+  attr_accessor :token, :code
 
   def initialize(token, phone, expire = 120)
     @token = token
@@ -9,12 +9,10 @@ class Pin::Create < Service::Base
   end
 
   def call
-    @pin = Pin.new(token: @token, code: @code, expire: @expire)
-    @pin.save
-
+    Pin.create(token: token, code: code, expire: @expire)
     send_code
 
-    true
+    self
   end
 
   private

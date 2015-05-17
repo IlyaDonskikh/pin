@@ -1,26 +1,30 @@
 describe 'pin application' do
   it 'create pin' do
-    post 'create'
+    post 'create', token: generate_number
 
-    expect(last_response.body).to eq('true')
+    response = format_response(last_response)
+    result = { 'success' => true }
+
+    expect(response).to eq(result)
   end
 
   it 'return token' do
     token = generate_number
-    code = generate_number
-    Pin.create(token: token, code: code, expire: 120)
+    create_pin = Pin::Create.call(token, nil)
+    code = create_pin.code
 
     post 'check', token: token, code: code
 
-    response = JSON.parse(last_response.body.to_s)
+    response = format_response(last_response)
     result = { 'token' => token }
+
     expect(response).to eq(result)
   end
 
   it 'return error if code invalid' do
     post 'check', token: generate_number, code: generate_number
 
-    response = JSON.parse(last_response.body)
+    response = format_response(last_response)
     result = { 'errors' => ['code not valid'] }
 
     expect(response).to eq(result)
@@ -30,5 +34,9 @@ describe 'pin application' do
 
     def generate_number
       (0...4).map { (1..9).to_a.sample }.join
+    end
+
+    def format_response(response)
+      JSON.parse(response.body)
     end
 end

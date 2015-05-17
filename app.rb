@@ -9,9 +9,10 @@ module WheelyPin
       phone = params[:phone]
       expire = params[:expire]
 
-      create_pin = Pin::Create.call(token, phone, expire)
+      Pin::Create.call(token, phone, expire)
+      result = { success: true }
 
-      create_pin.to_json
+      result.to_json
     end
 
     post '/check' do
