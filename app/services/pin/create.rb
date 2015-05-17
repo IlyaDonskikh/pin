@@ -1,8 +1,9 @@
 class Pin::Create < Service::Base
   attr_accessor :token
 
-  def initialize(token)
+  def initialize(token, phone)
     @token = token
+    @phone = phone
     @code = generate_code
     @expire = 120 # seconds
   end
@@ -23,6 +24,6 @@ class Pin::Create < Service::Base
     end
 
     def send_code
-      p @code # Sms sender
+      # Send sms to phone number
     end
 end
