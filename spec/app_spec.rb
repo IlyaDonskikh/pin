@@ -10,7 +10,7 @@ describe 'pin application' do
 
   it 'return token' do
     token = generate_number
-    create_pin = Pin::Create.call(token, nil)
+    create_pin = Pin::Create.call(token, nil, 1000)
     code = create_pin.code
 
     post 'check', token: token, code: code
