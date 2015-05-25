@@ -18,7 +18,7 @@ class Pin::Create < Service::Base
   private
 
     def generate_code
-      (0...4).map { (1..9).to_a.sample }.join
+      (9999*rand).to_i
     end
 
     def send_code

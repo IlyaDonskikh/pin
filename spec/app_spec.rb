@@ -33,7 +33,7 @@ describe 'pin application' do
   private
 
     def generate_number
-      (0...4).map { (1..9).to_a.sample }.join
+      (9999*rand).to_i.to_s
     end
 
     def format_response(response)
