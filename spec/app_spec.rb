@@ -1,6 +1,6 @@
 describe 'pin application' do
   it 'create pin' do
-    post 'pins/', token: generate_number
+    post 'en/pins/', token: generate_number
 
     response = format_response(last_response)
     result = { 'success' => true }
@@ -11,7 +11,7 @@ describe 'pin application' do
   it 'create counter' do
     token = generate_number
 
-    post 'pins/', token: token
+    post 'en/pins/', token: token
 
     key = Counter.generate_key_by(token)
     counter = REDIS.get key
@@ -24,7 +24,7 @@ describe 'pin application' do
     create_pin = Pin::Create.call(token, nil, 1000)
     code = create_pin.code
 
-    post "pins/#{token}/check", code: code
+    post "en/pins/#{token}/check", code: code
 
     response = format_response(last_response)
     result = { 'token' => token }
@@ -36,10 +36,10 @@ describe 'pin application' do
     token = generate_number
     Pin::Create.call(token, nil, 1000)
 
-    post "pins/#{token}/check", code: generate_number
+    post "en/pins/#{token}/check", code: generate_number
 
     response = format_response(last_response)
-    result = { 'errors' => ['code not valid'] }
+    result = { 'errors' => ['Code not valid'] }
 
     expect(response).to eq(result)
   end
@@ -48,12 +48,12 @@ describe 'pin application' do
     token = generate_number
     Pin::Create.call(token, nil, 1000)
 
-    4.times do
-      post "pins/#{token}/check", code: generate_number
+    6.times do
+      post "en/pins/#{token}/check", code: generate_number
     end
 
     response = format_response(last_response)
-    result = { 'errors' => ['bruteforce protection', 'code not valid'] }
+    result = { 'errors' => ['Bruteforce protection', 'Code not valid'] }
 
     expect(response).to eq(result)
   end

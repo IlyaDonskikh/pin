@@ -1,0 +1,7 @@
+en:
+  pin:
+    errors:
+      code_not_defined: Code not defined
+      token_not_defined: Token not defined
+      bruteforce_protection: Bruteforce protection
+      code_not_valid: Code not valid

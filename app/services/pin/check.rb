@@ -30,11 +30,15 @@ class Pin::Check < Service::Base
     end
 
     def check_code_present
-      @errors << 'code not defined' unless verification_code
+      return if verification_code
+
+      @errors << I18n.t('code_not_defined', scope: [:pin, :errors])
     end
 
     def check_token_present
-      @errors << 'token not defined' unless token
+      return if token
+
+      @errors << I18n.t('token_not_defined', scope: [:pin, :errors])
     end
 
     def check_bruteforce
@@ -45,7 +49,8 @@ class Pin::Check < Service::Base
       return if counter && @max_attempts >= count
 
       REDIS.del key
-      @errors << 'bruteforce protection'
+      Pin.delete token
+      @errors << I18n.t('bruteforce_protection', scope: [:pin, :errors])
     end
 
     def check_code_valid
@@ -53,6 +58,6 @@ class Pin::Check < Service::Base
 
       return if code && code == verification_code
 
-      @errors << 'code not valid'
+      @errors << I18n.t('code_not_valid', scope: [:pin, :errors])
     end
 end

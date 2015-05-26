@@ -6,6 +6,7 @@ GEM
     diff-lcs (1.2.5)
     ffi (1.9.8)
     hitimes (1.2.2)
+    i18n (0.7.0)
     json (1.8.2)
     listen (2.10.0)
       celluloid (~> 0.16.0)
@@ -48,6 +49,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  i18n
   json
   rack
   rack-test

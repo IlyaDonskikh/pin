@@ -4,6 +4,11 @@ module WheelyPin
       content_type :json
     end
 
+    before '/:locale/*' do
+      I18n.locale       =       params[:locale] || :en
+      request.path_info = '/' + params[:splat][0]
+    end
+
     post '/pins/?' do
       token = params[:token]
       phone = params[:phone]
