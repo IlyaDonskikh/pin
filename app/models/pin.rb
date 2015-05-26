@@ -4,7 +4,7 @@ class Pin
   def initialize(params = {})
     @token = params[:token]
     @code = params[:code]
-    @expire = params[:expire]
+    @expire = params[:expire] || 1000
   end
 
   def self.get_code_by(token)
@@ -20,8 +20,7 @@ class Pin
   end
 
   def save
-    REDIS.set(token, code)
-    REDIS.expire(token, expire) if expire
+    REDIS.set(token, code, ex: expire)
 
     true
   end

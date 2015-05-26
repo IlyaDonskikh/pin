@@ -8,6 +8,17 @@ describe 'pin application' do
     expect(response).to eq(result)
   end
 
+  it 'create counter' do
+    token = generate_number
+
+    post 'pins/', token: token
+
+    key = token + ':counter'
+    counter = REDIS.get key
+
+    expect('0').to eq(counter)
+  end
+
   it 'return token' do
     token = generate_number
     create_pin = Pin::Create.call(token, nil, 1000)
@@ -22,10 +33,27 @@ describe 'pin application' do
   end
 
   it 'return error if code invalid' do
-    post "pins/#{generate_number}/check", code: generate_number
+    token = generate_number
+    Pin::Create.call(token, nil, 1000)
+
+    post "pins/#{token}/check", code: generate_number
 
     response = format_response(last_response)
     result = { 'errors' => ['code not valid'] }
+
+    expect(response).to eq(result)
+  end
+
+  it 'delete pin if more than three attempts' do
+    token = generate_number
+    Pin::Create.call(token, nil, 1000)
+
+    4.times do
+      post "pins/#{token}/check", code: generate_number
+    end
+
+    response = format_response(last_response)
+    result = { 'errors' => ['bruteforce protection', 'code not valid'] }
 
     expect(response).to eq(result)
   end

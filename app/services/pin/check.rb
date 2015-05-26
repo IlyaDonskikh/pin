@@ -4,6 +4,7 @@ class Pin::Check < Service::Base
   def initialize(token, verification_code)
     @token = token
     @verification_code = verification_code
+    @max_attempts = 3
     @errors = []
   end
 
@@ -24,6 +25,7 @@ class Pin::Check < Service::Base
     def verify!
       check_code_present
       check_token_present
+      check_bruteforce
       check_code_valid
     end
 
@@ -35,9 +37,22 @@ class Pin::Check < Service::Base
       @errors << 'token not defined' unless token
     end
 
+    def check_bruteforce
+      key = token + ':counter'
+      counter = REDIS.get key
+      counter && count = REDIS.incr(key)
+
+      return if counter && @max_attempts >= count
+
+      REDIS.del key
+      @errors << 'bruteforce protection'
+    end
+
     def check_code_valid
       code = Pin.get_code_by(token)
 
-      @errors << 'code not valid' if !code || code != verification_code
+      return if code && code == verification_code
+
+      @errors << 'code not valid'
     end
 end
