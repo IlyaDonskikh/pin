@@ -23,7 +23,8 @@ class Pin::Create < Service::Base
     end
 
     def create_bruteforce_protection
-      key = token.to_s + ':counter'
+      key = Counter.generate_key_by(token)
+
       REDIS.set(key, 0, ex: @expire)
     end
 

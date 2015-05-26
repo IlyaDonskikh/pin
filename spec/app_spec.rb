@@ -13,7 +13,7 @@ describe 'pin application' do
 
     post 'pins/', token: token
 
-    key = token + ':counter'
+    key = Counter.generate_key_by(token)
     counter = REDIS.get key
 
     expect('0').to eq(counter)
