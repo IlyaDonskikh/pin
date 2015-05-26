@@ -4,7 +4,7 @@ module WheelyPin
       content_type :json
     end
 
-    post '/create' do
+    post '/pins/?' do
       token = params[:token]
       phone = params[:phone]
       expire = params[:expire]
@@ -15,7 +15,7 @@ module WheelyPin
       result.to_json
     end
 
-    post '/check' do
+    post '/pins/:token/check' do
       token = params[:token]
       code = params[:code]
 
