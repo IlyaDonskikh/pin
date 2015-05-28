@@ -13,7 +13,7 @@ describe 'pin application' do
 
     post 'en/pins/', token: token
 
-    key = Counter.generate_key_by(token)
+    key = generate_counter_key_by(token)
     counter = REDIS.get key
 
     expect('0').to eq(counter)
@@ -53,7 +53,7 @@ describe 'pin application' do
     end
 
     response = format_response(last_response)
-    result = { 'errors' => ['Bruteforce protection', 'Code not valid'] }
+    result = { 'errors' => ['Brute-force protection', 'Code not valid'] }
 
     expect(response).to eq(result)
   end

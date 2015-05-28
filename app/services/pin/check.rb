@@ -42,7 +42,7 @@ class Pin::Check < Service::Base
     end
 
     def check_bruteforce
-      key = Counter.generate_key_by(token)
+      key = generate_counter_key_by(token)
       counter = REDIS.get key
       counter && count = REDIS.incr(key)
 

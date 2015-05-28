@@ -3,5 +3,5 @@ en:
     errors:
       code_not_defined: Code not defined
       token_not_defined: Token not defined
-      bruteforce_protection: Bruteforce protection
+      bruteforce_protection: Brute-force protection
       code_not_valid: Code not valid
