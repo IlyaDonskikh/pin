@@ -9,5 +9,3 @@ require './config/locales'
 require_all 'app/**/*.rb'
 require_all 'initializers/*.rb'
 require './app'
-
-include CounterHelper

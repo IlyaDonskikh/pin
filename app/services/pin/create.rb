@@ -9,7 +9,7 @@ class Pin::Create < Service::Base
   end
 
   def call
-    Pin.create(token: token, code: code, expire: @expire)
+    Pin.create(key: token, value: code, expire: @expire)
     create_bruteforce_protection
     send_code
 
@@ -23,9 +23,7 @@ class Pin::Create < Service::Base
     end
 
     def create_bruteforce_protection
-      key = generate_counter_key_by(token)
-
-      REDIS.set(key, 0, ex: @expire)
+      Counter.create(key: token, value: 0, expire: @expire)
     end
 
     def send_code

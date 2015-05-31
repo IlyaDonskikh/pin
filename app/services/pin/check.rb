@@ -42,19 +42,18 @@ class Pin::Check < Service::Base
     end
 
     def check_bruteforce
-      key = generate_counter_key_by(token)
-      counter = REDIS.get key
-      counter && count = REDIS.incr(key)
+      counter = Counter.get_value_by(token)
+      counter && count = Counter.incr(token)
 
       return if counter && @max_attempts >= count
 
-      REDIS.del key
+      Counter.delete token
       Pin.delete token
       @errors << I18n.t('bruteforce_protection', scope: [:pin, :errors])
     end
 
     def check_code_valid
-      code = Pin.get_code_by(token)
+      code = Pin.get_value_by(token)
 
       return if code && code == verification_code
 
