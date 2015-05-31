@@ -1,4 +1,6 @@
 # Pin
+[![Code Climate](https://codeclimate.com/github/IlyaDonskikh/pin/badges/gpa.svg)](https://codeclimate.com/github/IlyaDonskikh/pin)
+
 Pin service.
 
 ## Setup
